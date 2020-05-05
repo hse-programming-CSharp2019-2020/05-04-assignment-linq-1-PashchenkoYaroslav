@@ -68,13 +68,35 @@ namespace Task04
                 Console.WriteLine("Exception");
             }
             // использовать синтаксис методов! SQL-подобные запросы не писать!
+            try
+            {
+                int arrAggregate = 5 + arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 == 0).Select(n => n.Item).Sum() - arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 != 0).Select(n => n.Item).Sum();
 
-            int arrAggregate = 5 + arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 == 0).Select(n => n.Item).Sum() - arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 != 0).Select(n => n.Item).Sum();
+                int arrMyAggregate = MyClass.MyAggregate(arr);
 
-            int arrMyAggregate = MyClass.MyAggregate(arr);
-
-            Console.WriteLine(arrAggregate);
-            Console.WriteLine(arrMyAggregate);
+                Console.WriteLine(arrAggregate);
+                Console.WriteLine(arrMyAggregate);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
 
         }
     }
