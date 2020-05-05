@@ -54,6 +54,14 @@ namespace Task01
             {
                 Console.WriteLine("ArgumentNullException");
             }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("InvalidOperationException");

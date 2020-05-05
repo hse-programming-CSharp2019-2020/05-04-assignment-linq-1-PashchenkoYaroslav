@@ -41,15 +41,23 @@ namespace Task04
 
         public static void RunTesk04()
         {
-            int[] arr= { };
+            int[] arr = { };
             try
             {
                 // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
                 arr = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => int.Parse(x)).ToArray();
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException)
             {
-                Console.WriteLine("ArgumentException");
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
             }
             catch (InvalidOperationException)
             {
@@ -61,7 +69,7 @@ namespace Task04
             }
             // использовать синтаксис методов! SQL-подобные запросы не писать!
 
-            int arrAggregate = MyClass.MyAggregate(arr); //arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 == 0).Select(n => n.Item);
+            int arrAggregate = 5 + arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 == 0).Select(n => n.Item).Sum() - arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 != 0).Select(n => n.Item).Sum();
 
             int arrMyAggregate = MyClass.MyAggregate(arr);
 

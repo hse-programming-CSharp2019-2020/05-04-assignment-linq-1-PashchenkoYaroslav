@@ -80,9 +80,21 @@ namespace Task02
             {
                 Console.WriteLine("ArgumentNullException");
             }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("InvalidOperationException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
             }
         }
         static string separator = " ";

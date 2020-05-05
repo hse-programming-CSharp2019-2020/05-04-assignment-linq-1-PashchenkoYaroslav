@@ -65,9 +65,17 @@ namespace Task03
                     computerInfoList.Add(new ComputerInfo(data));
                 }
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException)
             {
-                Console.WriteLine("ArgumentException");
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
             }
             catch (InvalidOperationException)
             {
