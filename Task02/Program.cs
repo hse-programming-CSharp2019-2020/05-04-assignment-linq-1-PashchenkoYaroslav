@@ -41,11 +41,16 @@ namespace Task02
 
         public static void RunTesk02()
         {
+            bool pass = false;
             int[] arr = { 0, 1 };
             try
             {
-                // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => int.Parse(x)).ToArray();
+                checked
+                {
+                    // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
+                    arr = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => int.Parse(x)).ToArray();
+                    pass = true;
+                }
             }
             catch (ArgumentNullException)
             {
@@ -65,44 +70,46 @@ namespace Task02
             }
             catch (Exception)
             {
-                Console.WriteLine("Exception");
+                Console.WriteLine("Exception");             
             }
 
+            if (pass)
+            {
+                var filteredCollection = arr.TakeWhile(x => x != 0);
 
-            var filteredCollection = arr.TakeWhile(x => x != 0);
 
+                try
+                {
+                    // использовать статическую форму вызова метода подсчета среднего
+                    double averageUsingStaticForm = filteredCollection.Average(x => Convert.ToDouble(x * x));
+                    Console.WriteLine($"{averageUsingStaticForm:F3}");
+                    // использовать объектную форму вызова метода подсчета среднего
+                    double averageUsingInstanceForm = filteredCollection.Select(x => Convert.ToDouble(x * x)).Average();
+                    Console.WriteLine($"{averageUsingInstanceForm:F3}");
 
-            try
-            {
-                // использовать статическую форму вызова метода подсчета среднего
-                double averageUsingStaticForm = filteredCollection.Average(x => Convert.ToDouble(x * x));
-                Console.WriteLine($"{averageUsingStaticForm:F3} ");
-                // использовать объектную форму вызова метода подсчета среднего
-                double averageUsingInstanceForm = filteredCollection.Select(x => Convert.ToDouble(x * x)).Average();
-                Console.WriteLine($"{averageUsingInstanceForm:F3} ");
-
-                // вывести элементы коллекции в одну строку
-                Console.WriteLine(filteredCollection.Select(col => col.ToString()).Aggregate((current, item) => current + separator + item));
-            }
-            catch (ArgumentNullException)
-            {
-                Console.WriteLine("ArgumentNullException");
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("FormatException");
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("OverflowException");
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("InvalidOperationException");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Exception");
+                    // вывести элементы коллекции в одну строку
+                    Console.WriteLine(filteredCollection.Select(col => col.ToString()).Aggregate((current, item) => current + separator + item));
+                }
+                catch (ArgumentNullException)
+                {
+                    Console.WriteLine("ArgumentNullException");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("FormatException");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("OverflowException");
+                }
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("InvalidOperationException");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Exception");
+                }
             }
         }
         static string separator = " ";
