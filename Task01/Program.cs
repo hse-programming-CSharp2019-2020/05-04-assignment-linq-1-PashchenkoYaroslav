@@ -86,6 +86,22 @@ namespace Task01
                 PrintEnumerableCollection<int>(arrQuery, ":");
                 PrintEnumerableCollection<int>(arrMethod, "*");
             }
+                       catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
             catch (Exception)
             {
                 Console.WriteLine("Exception");
