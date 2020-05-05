@@ -49,8 +49,8 @@ namespace Task02
                 {
                     // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
                     arr = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => int.Parse(x)).ToArray();
-                    pass = true;
                 }
+                pass = true;
             }
             catch (ArgumentNullException)
             {
@@ -80,15 +80,18 @@ namespace Task02
 
                 try
                 {
-                    // использовать статическую форму вызова метода подсчета среднего
-                    double averageUsingStaticForm = filteredCollection.Average(x => Convert.ToDouble(x * x));
-                    Console.WriteLine($"{averageUsingStaticForm:F3}");
-                    // использовать объектную форму вызова метода подсчета среднего
-                    double averageUsingInstanceForm = filteredCollection.Select(x => Convert.ToDouble(x * x)).Average();
-                    Console.WriteLine($"{averageUsingInstanceForm:F3}");
+                    checked
+                    {
+                        // использовать статическую форму вызова метода подсчета среднего
+                        double averageUsingStaticForm = filteredCollection.Average(x => Convert.ToDouble(x * x));
+                        Console.WriteLine($"{averageUsingStaticForm:F3}");
+                        // использовать объектную форму вызова метода подсчета среднего
+                        double averageUsingInstanceForm = filteredCollection.Select(x => Convert.ToDouble(x * x)).Average();
+                        Console.WriteLine($"{averageUsingInstanceForm:F3}");
 
-                    // вывести элементы коллекции в одну строку
-                    Console.WriteLine(filteredCollection.Select(col => col.ToString()).Aggregate((current, item) => current + separator + item));
+                        // вывести элементы коллекции в одну строку
+                        Console.WriteLine(filteredCollection.Select(col => col.ToString()).Aggregate((current, item) => current + separator + item));
+                    }
                 }
                 catch (ArgumentNullException)
                 {
