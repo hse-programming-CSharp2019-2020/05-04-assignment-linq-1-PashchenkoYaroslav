@@ -74,10 +74,6 @@ namespace Task03
             {
                 Console.WriteLine("ArgumentNullException");
             }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("ArgumentException");
-            }
             catch (FormatException)
             {
                 Console.WriteLine("FormatException");
@@ -85,6 +81,10 @@ namespace Task03
             catch (OverflowException)
             {
                 Console.WriteLine("OverflowException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
             }
             catch (InvalidOperationException)
             {
@@ -96,20 +96,27 @@ namespace Task03
             }
             if (pass)
             {
-                // выполните сортировку одним выражением
-                var computerInfoQuery = from pc in computerInfoList
-                                        orderby pc.Owner descending, pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
-                                        select pc;
+                try
+                {
+                    // выполните сортировку одним выражением
+                    var computerInfoQuery = from pc in computerInfoList
+                                            orderby pc.Owner descending, pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
+                                            select pc;
 
 
-                PrintCollectionInOneLine(computerInfoQuery);
+                    PrintCollectionInOneLine(computerInfoQuery);
 
-                Console.WriteLine();
+                    Console.WriteLine();
 
-                // выполните сортировку одним выражением
-                var computerInfoMethods = computerInfoList.OrderByDescending(pc => pc.Owner)
-                    .ThenBy(pc => pc.ComputerManufacturer.Fabricator).ThenByDescending(pc => pc.ComputerManufacturer.Data);
-                PrintCollectionInOneLine(computerInfoMethods);
+                    // выполните сортировку одним выражением
+                    var computerInfoMethods = computerInfoList.OrderByDescending(pc => pc.Owner)
+                        .ThenBy(pc => pc.ComputerManufacturer.Fabricator).ThenByDescending(pc => pc.ComputerManufacturer.Data);
+                    PrintCollectionInOneLine(computerInfoMethods);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("ArgumentException");
+                }
             }
 
         }
@@ -142,7 +149,7 @@ namespace Task03
             Owner = data[0];
             ComputerManufacturer = new Manufacturer();
             int date;
-            if (!int.TryParse(data[1], out date))
+            if (!int.TryParse(data[1], out date) || date > 2020 || date < 1970)
                 throw new ArgumentException();
             ComputerManufacturer.Data = date;
             int type;
