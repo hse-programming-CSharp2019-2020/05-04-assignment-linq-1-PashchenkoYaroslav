@@ -68,7 +68,7 @@ namespace Task02
             }
 
 
-            var filteredCollection = arr.TakeWhile(x => x > 0);
+            var filteredCollection = arr.TakeWhile(x => x != 0);
 
 
             try
