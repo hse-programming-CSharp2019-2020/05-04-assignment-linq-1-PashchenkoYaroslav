@@ -54,7 +54,8 @@ namespace Task03
     {
         static void Main(string[] args)
         {
-             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
+            bool pass = false;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
             int N = -1;
@@ -67,10 +68,15 @@ namespace Task03
                     string[] data = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                     computerInfoList.Add(new ComputerInfo(data));
                 }
+                pass = true;
             }
             catch (ArgumentNullException)
             {
                 Console.WriteLine("ArgumentNullException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
             }
             catch (FormatException)
             {
@@ -88,21 +94,23 @@ namespace Task03
             {
                 Console.WriteLine("Exception");
             }
+            if (pass)
+            {
+                // выполните сортировку одним выражением
+                var computerInfoQuery = from pc in computerInfoList
+                                        orderby pc.Owner descending, pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
+                                        select pc;
 
-            // выполните сортировку одним выражением
-            var computerInfoQuery = from pc in computerInfoList
-                                    orderby pc.Owner descending, pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
-                                    select pc;
 
+                PrintCollectionInOneLine(computerInfoQuery);
 
-            PrintCollectionInOneLine(computerInfoQuery);
+                Console.WriteLine();
 
-            Console.WriteLine();
-
-            // выполните сортировку одним выражением
-            var computerInfoMethods = computerInfoList.OrderByDescending(pc => pc.Owner)
-                .ThenBy(pc => pc.ComputerManufacturer.Fabricator).ThenByDescending(pc => pc.ComputerManufacturer.Data);
-            PrintCollectionInOneLine(computerInfoMethods);
+                // выполните сортировку одним выражением
+                var computerInfoMethods = computerInfoList.OrderByDescending(pc => pc.Owner)
+                    .ThenBy(pc => pc.ComputerManufacturer.Fabricator).ThenByDescending(pc => pc.ComputerManufacturer.Data);
+                PrintCollectionInOneLine(computerInfoMethods);
+            }
 
         }
         static string separator = "\n";
