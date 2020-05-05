@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /*
  * На вход подается строка, состоящая из целых чисел типа int, разделенных одним или несколькими пробелами.
@@ -39,30 +41,46 @@ namespace Task04
 
         public static void RunTesk04()
         {
-            int[] arr;
+            int[] arr= { };
             try
             {
                 // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
+                arr = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => int.Parse(x)).ToArray();
             }
-           
-                // использовать синтаксис методов! SQL-подобные запросы не писать!
-               
-                int arrAggregate = arr.
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
+            // использовать синтаксис методов! SQL-подобные запросы не писать!
 
-                int arrMyAggregate = MyClass.MyAggregate(arr);
+            int arrAggregate = MyClass.MyAggregate(arr); //arr.Select((item, index) => new { Item = item, Index = index }).Where(n => n.Index % 2 == 0).Select(n => n.Item);
 
-                Console.WriteLine(arrAggregate);
-                Console.WriteLine(arrMyAggregate);
-           
+            int arrMyAggregate = MyClass.MyAggregate(arr);
+
+            Console.WriteLine(arrAggregate);
+            Console.WriteLine(arrMyAggregate);
+
         }
     }
 
     static class MyClass
     {
-        public static int MyAggregate()
+        public static int MyAggregate(int[] arr)
         {
-            
+            int result = 5;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                result += i % 2 == 0 ? arr[i] : -arr[i];
+            }
+            return result;
         }
     }
 }

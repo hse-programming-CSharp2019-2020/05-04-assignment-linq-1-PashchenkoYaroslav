@@ -54,44 +54,115 @@ namespace Task03
     {
         static void Main(string[] args)
         {
-            int N
+            int N = -1;
             List<ComputerInfo> computerInfoList = new List<ComputerInfo>();
             try
             {
-                N = 
-                
+                N = StringParseToInt();
                 for (int i = 0; i < N; i++)
                 {
-                    
+                    string[] data = Console.ReadLine().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    computerInfoList.Add(new ComputerInfo(data));
                 }
             }
-           
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
 
             // выполните сортировку одним выражением
-            var computerInfoQuery = from 
+            var computerInfoQuery = from pc in computerInfoList
+                                    orderby pc.Owner descending,pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
+                                    select pc;
+
 
             PrintCollectionInOneLine(computerInfoQuery);
 
             Console.WriteLine();
 
             // выполните сортировку одним выражением
-            var computerInfoMethods = computerInfoList.
-
+            var computerInfoMethods = computerInfoList.OrderByDescending(pc => pc.Owner)
+                .ThenBy(pc => pc.ComputerManufacturer.Fabricator).ThenByDescending(pc => pc.ComputerManufacturer.Data);
             PrintCollectionInOneLine(computerInfoMethods);
-            
-        }
 
+        }
+        static string separator = "\n";
         // выведите элементы коллекции на экран с помощью кода, состоящего из одной линии (должна быть одна точка с запятой)
         public static void PrintCollectionInOneLine(IEnumerable<ComputerInfo> collection)
         {
+            Console.WriteLine(collection.Select(col => col.ToString()).Aggregate((current, item) => current + separator + item));
+        }
+        /// <summary>
+        /// Метод превращает строку в int.
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>   
+        public static int StringParseToInt()
+        {
+            string strs = Console.ReadLine();
+            int res;
+            if (!int.TryParse(strs, out res) || res < 0)
+                throw new ArgumentException();
+            return res;
         }
     }
 
 
     class ComputerInfo
     {
+        public ComputerInfo(string[] data)
+        {
+            Owner = data[0];
+            ComputerManufacturer = new Manufacturer();
+            int date;
+            if (!int.TryParse(data[1], out date))
+                throw new ArgumentException();
+            ComputerManufacturer.Data = date;
+            int type;
+            if (!int.TryParse(data[2], out type) || type > 3 || type < 0)
+                throw new ArgumentException();
+            switch (type)
+            {
+                case 0:
+                    ComputerManufacturer.Fabricator = "Dell";
+                    break;
+                case 1:
+                    ComputerManufacturer.Fabricator = "Asus";
+                    break;
+                case 2:
+                    ComputerManufacturer.Fabricator = "Apple";
+                    break;
+                case 3:
+                    ComputerManufacturer.Fabricator = "Microsoft";
+                    break;
+            }
+        }
+
         public string Owner { get; set; }
         public Manufacturer ComputerManufacturer { get; set; }
-        
+
+        public override string ToString()
+        {
+            return $"{Owner}: {ComputerManufacturer}";
+        }
     }
+    class Manufacturer
+    {
+        public string Fabricator { get; set; }
+        public int Data { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Fabricator} ["+$"{Data}]";
+        }
+    }
+
 }
