@@ -35,8 +35,6 @@ namespace Task02
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            Console.InputEncoding = Encoding.UTF8;
             RunTesk02();
         }
 
@@ -99,6 +97,5 @@ namespace Task02
             }
         }
         static string separator = " ";
-
     }
 }
