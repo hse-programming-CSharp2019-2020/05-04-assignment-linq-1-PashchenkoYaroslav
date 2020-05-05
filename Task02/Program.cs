@@ -35,6 +35,8 @@ namespace Task02
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             RunTesk02();
         }
 
@@ -65,7 +67,6 @@ namespace Task02
 
             try
             {
-
                 // использовать статическую форму вызова метода подсчета среднего
                 double averageUsingStaticForm = filteredCollection.Average(x => Convert.ToDouble(x * x));
                 Console.WriteLine($"{averageUsingStaticForm:F3} ");
