@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
 /*Все действия по обработке данных выполнять с использованием LINQ
  * 
  * Объявите перечисление Manufacturer, состоящее из элементов
@@ -54,6 +54,8 @@ namespace Task03
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             int N = -1;
             List<ComputerInfo> computerInfoList = new List<ComputerInfo>();
             try
