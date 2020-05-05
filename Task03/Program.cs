@@ -54,8 +54,6 @@ namespace Task03
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            Console.InputEncoding = Encoding.UTF8;
             int N = -1;
             List<ComputerInfo> computerInfoList = new List<ComputerInfo>();
             try
@@ -90,7 +88,7 @@ namespace Task03
 
             // выполните сортировку одним выражением
             var computerInfoQuery = from pc in computerInfoList
-                                    orderby pc.Owner descending,pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
+                                    orderby pc.Owner descending, pc.ComputerManufacturer.Fabricator, pc.ComputerManufacturer.Data descending
                                     select pc;
 
 
@@ -171,7 +169,7 @@ namespace Task03
 
         public override string ToString()
         {
-            return $"{Fabricator} ["+$"{Data}]";
+            return $"{Fabricator} [" + $"{Data}]";
         }
     }
 
